@@ -14,6 +14,29 @@ public abstract class Helicoptero {
 
 
 
+    public Double getCombustible() {
+        return combustible;
+    }
+
+
+
+    public Double getKilometraje() {
+        return kilometraje;
+    }
+
+
+
+    public Double getCapacidadTanque() {
+        return capacidadTanque;
+    }
+
+
+
+    public List<String> getBitacora() {
+        return bitacora;
+    }
+
+
     private Double combustible;
     private Double kilometraje = 0.0;
     private final Double capacidadTanque;
@@ -22,14 +45,14 @@ public abstract class Helicoptero {
     
     
     //Constructor
-    public Helicoptero(Double combustible, Double kilometraje, Double capacidadTanque, IModoVuelo modoVuelo) {
-        if (combustible < 0){
-            throw new EstadoInvalidoException("No se puede inicializar un helicoptero con combustible negativo," + " valor recibido: " + combustible)
+    public Helicoptero (Double combustible, Double capacidadTanque) {
+        if (combustible < 0.0){
+            throw new EstadoInvalidoException("No se puede inicializar un helicoptero con combustible negativo," + " valor recibido: " + combustible);
         }
         this.combustible = combustible;
-        this.kilometraje = kilometraje;
         this.capacidadTanque = capacidadTanque;
         this.modoVuelo = new ModoEficiente();
+        this.bitacora = null;
     }
 
 
@@ -90,7 +113,7 @@ public abstract class Helicoptero {
 
 
 
-    private void registrarEnBitacora(String mensaje) {
+    protected void registrarEnBitacora(String mensaje) {
         bitacora.add(mensaje);
     }
 
@@ -107,9 +130,25 @@ public abstract class Helicoptero {
     }
 
 
+    public IModoVuelo getModoVuelo() {
+        return modoVuelo;
+    }
+
+
+
     public void setModoVuelo(IModoVuelo modoVuelo) {
         this.modoVuelo = modoVuelo;
     }
 
+
+    public Double intentarVolar(Double distanciaKm){
+        try {
+            volar(distanciaKm, false);
+            return distanciaKm;
+        } catch (EstadoInvalidoException e){
+            System.out.println("Gestion silenciosa, no pudo volar por combustible insuficiente.");
+            return 0.0;
+        }
+    }
 
 }
