@@ -88,7 +88,7 @@ public abstract class Helicoptero {
             if(volarHastaDondeSePueda){
                 return volarParcialmente();
             }
-            throw new EstadoInvalidoException("No alcanza el combustible para el vuelo completo") 
+            throw new EstadoInvalidoException("No alcanza el combustible para el vuelo completo");
         }
 
         this.combustible -= combustibleNecesario;

@@ -1,7 +1,6 @@
 package ar.edu.unahur.obj2.excepciones.helicopteros;
 
 import ar.edu.unahur.obj2.excepciones.excepciones.MissionAbortadaException;
-import ar.edu.unahur.obj2.excepciones.modos.IModoVuelo;
 import ar.edu.unahur.obj2.excepciones.modos.ModoAgresivo;
 
 public class HelicopteroMilitar extends Helicoptero{
@@ -16,12 +15,13 @@ public class HelicopteroMilitar extends Helicoptero{
 
     @Override
     protected void finalizarVuelo(Double kilometraje2) {
-        //TODO
+        registrarEnBitacora("vuelo militar completado " + kilometraje2);
     }
 
     @Override
     protected void prepararVuelo() {
-        //TODO
+        validarEstadoDespegue();
+        registrarEnBitacora("Armamento y municiones verificados. Listo para despegue");
     }
 
     @Override
@@ -31,7 +31,7 @@ public class HelicopteroMilitar extends Helicoptero{
         Boolean combustibleBajo = getCombustible() < minimoAgresivo;
 
         if (esAgresivo && combustibleBajo){
-            throw new MissionAbortadaException()
+            throw new MissionAbortadaException("No se puede iniciar el vuelo, el helicoptero esta en modo agresivo y el combustible es menor a " + minimoAgresivo);
         }
     }
 
